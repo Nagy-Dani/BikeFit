@@ -20,10 +20,6 @@ from src.utils import (
     write_out_user
 )
 
-
-
-
-
 def main():
     """Main application entry point"""
     print("🚴‍♂️ BikeFit - Advanced Bicycle Fitting Application 🚴‍♀️")
