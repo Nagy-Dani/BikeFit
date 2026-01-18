@@ -11,7 +11,7 @@ def collect_user_data_gui():
             # Create a dictionary to hold the new user data
             new_user_data = {
                 'name': name_entry.get() or 'Average Joe',
-                'bike_type': bike_type.get(),
+                'bike_type': bike_type.get() or 'road',
                 'test_mode': test_mode_var.get()
             }
 

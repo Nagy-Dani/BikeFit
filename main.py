@@ -22,7 +22,7 @@ from src.utils import (
 
 def main():
     """Main application entry point"""
-    print("🚴‍♂️ BikeFit - Advanced Bicycle Fitting Application 🚴‍♀️")
+    print(" BikeFit - Advanced Bicycle Fitting Application")
     print("=" * 60)
     
     user_profile = collect_user_data_gui()

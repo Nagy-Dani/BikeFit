@@ -27,13 +27,22 @@ def process_media(source, pose, display=True):
     hip_angles = []
     timestamps = []
     start_time = time.time()
+    
+    # Check if source is a file (string) or camera (int)
+    is_video_file = isinstance(source, str)
 
     while cap.isOpened():
         success, image = cap.read()
         if not success:
             break
 
-        current_time = time.time() - start_time
+        if is_video_file:
+            # For video files, use the actual video timestamp
+            # cap.get(cv2.CAP_PROP_POS_MSEC) returns milliseconds
+            current_time = cap.get(cv2.CAP_PROP_POS_MSEC) / 1000.0
+        else:
+            # For live camera, use system time
+            current_time = time.time() - start_time
 
         # To improve performance, optionally mark the image as not writeable to
         # pass by reference.
