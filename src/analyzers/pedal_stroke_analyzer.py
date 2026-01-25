@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
-matplotlib.use('TkAgg')  # Use TkAgg backend for better compatibility
+matplotlib.use('Agg')  # Use Agg backend for non-interactive plotting (compatible with Qt)
 import seaborn as sns
 from scipy import signal
 from scipy.interpolate import interp1d
@@ -270,8 +270,8 @@ class PedalStrokeAnalyzer:
             print(f"❌ Error saving plot: {e}")
             file_path = None
         
-        # Display the plot
-        plt.show(block=False)  # Non-blocking show
+        # Clean up memory
+        plt.close(fig)
         
         return file_path
     
