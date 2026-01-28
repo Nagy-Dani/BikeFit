@@ -1,0 +1,22 @@
+# General
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.DS_Store
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Project Specific Data & Outputs
+videos/
+plots/
+data/
+
+# Editor/IDE
+.idea/
+.vscode/

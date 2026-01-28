@@ -15,7 +15,27 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '.
 from src.analyzers.video_processor import BikeFitProcessor
 from src.data import BikeFitManager
 from src.analyzers.pedal_stroke_analyzer import PedalStrokeAnalyzer
+from src.analyzers.pedal_stroke_analyzer import PedalStrokeAnalyzer
 from src.utils import calculate_angle_stats, write_out_user
+
+# ==========================================
+# UI STYLE CONFIGURATION
+# Modify these values to customize the application look (when not using qt_material)
+# ==========================================
+STYLE_CONFIG = {
+    "main_bg": "#2b2b2b",
+    "main_text": "#ffffff",
+    "group_border_color": "#555555",
+    "group_border_width": "2px",          # Increased visibility
+    "group_border_radius": "6px",
+    "input_bg": "#3b3b3b",
+    "input_border": "#555555",
+    "btn_primary": "#0d6efd",
+    "btn_hover": "#0b5ed7",
+    "btn_radius": "6px",
+    "video_label_bg": "#000000",
+    "video_label_text": "#666666"
+}
 
 class AnalysisResultWindow(QDialog):
     def __init__(self, image_path, parent=None):
@@ -165,7 +185,9 @@ class MainWindow(QMainWindow):
         
         self.video_label = QLabel("Camera Offline")
         self.video_label.setAlignment(Qt.AlignCenter)
-        self.video_label.setStyleSheet("background-color: #000; color: #666; font-size: 20px;")
+        self.video_label.setAlignment(Qt.AlignCenter)
+        self.video_label.setStyleSheet(f"background-color: {STYLE_CONFIG['video_label_bg']}; color: {STYLE_CONFIG['video_label_text']}; font-size: 20px;")
+        self.video_label.setMinimumSize(640, 480)
         self.video_label.setMinimumSize(640, 480)
         
         video_layout.addWidget(self.video_label)
@@ -239,26 +261,31 @@ class MainWindow(QMainWindow):
         self.main_layout.addWidget(self.sidebar, stretch=1)
 
     def _apply_styles(self):
-        # Basic Dark Theme Stylesheet
-        self.setStyleSheet("""
-            QMainWindow { background-color: #2b2b2b; color: #ffffff; }
-            QGroupBox { 
-                font-weight: bold; border: 1px solid #555; 
-                margin-top: 6px; padding-top: 10px; color: #ddd;
-            }
-            QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px; }
-            QLabel { color: #ffffff; }
-            QLineEdit { 
-                background-color: #3b3b3b; color: #fff; border: 1px solid #555; 
-                padding: 4px; border-radius: 4px;
-            }
-            QPushButton {
-                background-color: #0d6efd; color: white; border: none;
-                padding: 8px 16px; border-radius: 4px; font-weight: bold;
-            }
-            QPushButton:hover { background-color: #0b5ed7; }
-            QPushButton:disabled { background-color: #555; color: #888; }
-            QPushButton:checked { background-color: #dc3545; }
+        # Basic Dark Theme Stylesheet (Fallback or Custom)
+        # Uses values from STYLE_CONFIG dictionary defined at the top of the file
+        
+        self.setStyleSheet(f"""
+            QMainWindow {{ background-color: {STYLE_CONFIG['main_bg']}; color: {STYLE_CONFIG['main_text']}; }}
+            QGroupBox {{ 
+                font-weight: bold; 
+                border: {STYLE_CONFIG['group_border_width']} solid {STYLE_CONFIG['group_border_color']}; 
+                border-radius: {STYLE_CONFIG['group_border_radius']};
+                margin-top: 10px; padding-top: 12px; color: #ddd;
+            }}
+            QGroupBox::title {{ subcontrol-origin: margin; left: 10px; padding: 0 5px; }}
+            QLabel {{ color: {STYLE_CONFIG['main_text']}; }}
+            QLineEdit {{ 
+                background-color: {STYLE_CONFIG['input_bg']}; color: #fff; 
+                border: 1px solid {STYLE_CONFIG['input_border']}; 
+                padding: 5px; border-radius: 4px;
+            }}
+            QPushButton {{
+                background-color: {STYLE_CONFIG['btn_primary']}; color: white; border: none;
+                padding: 8px 16px; border-radius: {STYLE_CONFIG['btn_radius']}; font-weight: bold;
+            }}
+            QPushButton:hover {{ background-color: {STYLE_CONFIG['btn_hover']}; }}
+            QPushButton:disabled {{ background-color: #555; color: #888; }}
+            QPushButton:checked {{ background-color: #dc3545; }}
         """)
 
     @Slot(QImage)
