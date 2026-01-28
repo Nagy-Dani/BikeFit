@@ -23,18 +23,18 @@ from src.utils import calculate_angle_stats, write_out_user
 # Modify these values to customize the application look (when not using qt_material)
 # ==========================================
 STYLE_CONFIG = {
-    "main_bg": "#2b2b2b",
-    "main_text": "#ffffff",
-    "group_border_color": "#555555",
+    "main_bg": "#1F2232",
+    "main_text": "#FDE8E9",
+    "group_border_color": "#E3BAC6",
     "group_border_width": "2px",          # Increased visibility
     "group_border_radius": "6px",
-    "input_bg": "#3b3b3b",
-    "input_border": "#555555",
-    "btn_primary": "#0d6efd",
-    "btn_hover": "#0b5ed7",
+    "input_bg": "#1F2232",
+    "input_border": "#E3BAC6",
+    "btn_primary": "#596475",
+    "btn_hover": "#BC9EC1",
     "btn_radius": "6px",
-    "video_label_bg": "#000000",
-    "video_label_text": "#666666"
+    "video_label_bg": "#1F2232",
+    "video_label_text": "#777777"
 }
 
 class AnalysisResultWindow(QDialog):
@@ -201,6 +201,8 @@ class MainWindow(QMainWindow):
         # 1. User Info
         info_group = QGroupBox("Rider Profile")
         form_layout = QFormLayout()
+        form_layout.setContentsMargins(15, 25, 15, 15)  # Add internal padding
+        form_layout.setVerticalSpacing(15)              # More breathing room between rows
         
         self.name_input = QLineEdit()
         self.age_input = QLineEdit()
@@ -218,6 +220,8 @@ class MainWindow(QMainWindow):
         # 2. Controls
         control_group = QGroupBox("Controls")
         ctrl_layout = QVBoxLayout()
+        ctrl_layout.setContentsMargins(15, 25, 15, 15)
+        ctrl_layout.setSpacing(10)
         
         self.btn_camera = QPushButton("Start Camera")
         self.btn_camera.clicked.connect(self.start_camera)
@@ -240,6 +244,7 @@ class MainWindow(QMainWindow):
         # 3. Live Stats
         stats_group = QGroupBox("Live Biometrics")
         stats_layout = QVBoxLayout()
+        stats_layout.setContentsMargins(15, 25, 15, 15)
         
         self.lbl_knee = QLabel("Knee Angle: --°")
         self.lbl_knee.setFont(QFont("Arial", 16, QFont.Bold))
@@ -270,14 +275,25 @@ class MainWindow(QMainWindow):
                 font-weight: bold; 
                 border: {STYLE_CONFIG['group_border_width']} solid {STYLE_CONFIG['group_border_color']}; 
                 border-radius: {STYLE_CONFIG['group_border_radius']};
-                margin-top: 10px; padding-top: 12px; color: #ddd;
+                margin-top: 20px; /* Increased to clear title */
+                padding-top: 25px; /* Push content down significantly */
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-bottom: 15px;
+                color: #ddd;
             }}
-            QGroupBox::title {{ subcontrol-origin: margin; left: 10px; padding: 0 5px; }}
+            QGroupBox::title {{ 
+                subcontrol-origin: margin; 
+                subcontrol-position: top left;
+                left: 15px; 
+                padding: 0 5px; 
+            }}
             QLabel {{ color: {STYLE_CONFIG['main_text']}; }}
             QLineEdit {{ 
                 background-color: {STYLE_CONFIG['input_bg']}; color: #fff; 
                 border: 1px solid {STYLE_CONFIG['input_border']}; 
-                padding: 5px; border-radius: 4px;
+                padding: 6px; border-radius: 4px; /* Increased padding */
+                margin-bottom: 2px; /* Alignment tweak */
             }}
             QPushButton {{
                 background-color: {STYLE_CONFIG['btn_primary']}; color: white; border: none;
@@ -400,11 +416,11 @@ def run_gui():
     app = QApplication(sys.argv)
     
     # Try to apply qt_material if installed
-    try:
-        from qt_material import apply_stylesheet
-        apply_stylesheet(app, theme='dark_teal.xml')
-    except ImportError:
-        print("qt_material not found, using internal dark theme.")
+    #try:
+    #    from qt_material import apply_stylesheet
+    #    apply_stylesheet(app, theme='dark_teal.xml')
+    #except ImportError:
+    #    print("qt_material not found, using internal dark theme.")
     
     window = MainWindow()
     window.show()
